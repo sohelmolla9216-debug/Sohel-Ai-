@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sohel AI - All-in-One AI Platform</title>
+    <!-- Font Awesome CDN -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #080b13;
+            --bg-card: #111623;
+            --border-color: #1f2937;
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --primary: #60a5fa; /* Blue */
+            --accent: #8b5cf6; /* Purple */
+            --success: #10b981;
+            --warning: #f59e0b;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* --- Sidebar --- */
+        .sidebar {
+            width: 260px;
+            background-color: var(--bg-card);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            padding: 1.5rem;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 3rem;
+        }
+
+        .logo-circle {
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            display: flex; align-items: center; justify-content: center;
+            font-weight: bold; font-size: 1.2rem; color: white;
+        }
+        .logo-img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid var(--primary);}
+        .brand-text { font-size: 1.25rem; font-weight: 800; }
+        .brand-sub { font-size: 0.75rem; color: var(--text-muted); }
+
+        .nav-menu { list-style: none; padding: 0; margin: 0; flex: 1; }
+        .nav-item { margin-bottom: 1rem; }
+        .nav-link {
+            display: flex; align-items: center; gap: 12px;
+            color: var(--text-muted); text-decoration: none;
+            padding: 10px; border-radius: 0.5rem;
+            transition: 0.2s; font-size: 0.9rem;
+        }
+        .nav-link:hover { background-color: rgba(96, 165, 250, 0.1); color: var(--primary); }
+        .nav-link.active { background-color: var(--primary); color: var(--bg-dark); font-weight: 600; }
+        .nav-link i { width: 20px; text-align: center; }
+        .nav-link span { display: block; }
+        .nav-link small { font-size: 0.65rem; opacity: 0.8; }
+
+        .pro-card {
+            background: linear-gradient(135deg, #1f2937, #111623);
+            padding: 1.5rem; border-radius: 0.75rem; text-align: center;
+            border: 1px solid var(--accent);
+        }
+        .pro-card h4 { margin: 0 0 0.5rem 0; color: var(--accent); }
+        .pro-card p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
+        .pro-btn {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white; border: none; padding: 0.5rem 1rem;
+            border-radius: 0.5rem; width: 100%; cursor: pointer; font-weight: 600;
+        }
+
+        /* --- Main Content --- */
+        .main-content { flex: 1; padding: 2rem 3rem; overflow-y: auto; }
+
+        /* Top Header */
+        .content-header { display: flex; justify-content: flex-end; align-items: center; margin-bottom: 3rem; }
+        .login-badge {
+            background-color: rgba(16, 185, 129, 0.1);
+            color: var(--success); border: 1px solid var(--success);
+            padding: 6px 12px; border-radius: 2rem; font-size: 0.8rem;
+        }
+        .login-badge i { margin-right: 6px; }
+
+        /* Hero Banner */
+        .hero-banner {
+            background: linear-gradient(135deg, var(--bg-card), #1e293b);
+            border-radius: 1rem; padding: 2.5rem; display: flex; align-items: center; gap: 2rem;
+            margin-bottom: 3rem; border: 1px solid var(--border-color);
+        }
+        .hero-icon { font-size: 4rem; color: var(--primary); }
+        .hero-text h1 { margin: 0 0 10px 0; font-size: 2rem; }
+        .hero-text h1 span { color: var(--primary); }
+        .hero-text p { margin: 0; color: var(--text-muted); font-size: 0.9rem; max-width: 500px; line-height: 1.5;}
+        .hero-badges { display: flex; gap: 10px; margin-top: 1rem; }
+        .h-badge { font-size: 0.75rem; background: rgba(255,255,255,0.05); padding: 4px 8px; border-radius: 4px;}
+        .h-badge i { margin-right: 4px; }
+
+        /* Tools Section */
+        .section-title { font-size: 1.25rem; margin-bottom: 1.5rem; color: var(--text-main); }
+        .tools-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 3rem; }
+        .tool-card {
+            background-color: var(--bg-card); border: 1px solid var(--border-color);
+            border-radius: 0.75rem; padding: 1.5rem; transition: 0.3s; display: flex; flex-direction: column;
+        }
+        .tool-card:hover { border-color: var(--primary); transform: translateY(-3px); }
+        .tool-icon { font-size: 2rem; color: var(--primary); margin-bottom: 1rem; }
+        .tool-card h3 { margin: 0 0 8px 0; font-size: 1.1rem; }
+        .tool-card p { margin: 0 0 1.5rem 0; color: var(--text-muted); font-size: 0.85rem; flex: 1;}
+        .tool-btn {
+            background-color: rgba(96, 165, 250, 0.1); color: var(--primary);
+            border: none; padding: 8px; border-radius: 0.5rem; cursor: pointer; font-size: 0.85rem;
+            display: flex; align-items: center; justify-content: center; gap: 6px; transition: 0.2s;
+        }
+        .tool-btn:hover { background-color: var(--primary); color: var(--bg-dark); }
+
+        /* Video Dubbing & Translate Section */
+        .dub-section { background-color: var(--bg-card); border-radius: 1rem; padding: 2rem; border: 1px solid var(--border-color); margin-bottom: 3rem; }
+        .dub-header { display: flex; align-items: center; gap: 15px; margin-bottom: 1.5rem; }
+        .dub-header i { font-size: 1.5rem; color: var(--accent); }
+        .dub-header h2 { margin: 0; font-size: 1.4rem; }
+        .dub-header p { margin: 5px 0 0 0; color: var(--text-muted); font-size: 0.85rem; }
+
+        .dub-workflow { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+        .wf-step { border: 1px dashed var(--border-color); border-radius: 0.5rem; padding: 1rem; }
+        .wf-step h4 { margin: 0 0 10px 0; font-size: 0.9rem; color: var(--text-muted); }
+        
+        /* Upload Area */
+        .upload-box {
+            border: 2px dashed var(--primary); border-radius: 0.5rem;
+            text-align: center; padding: 2rem; cursor: pointer; background-color: rgba(96, 165, 250, 0.05);
+        }
+        .upload-box i { font-size: 2rem; color: var(--primary); margin-bottom: 1rem; }
+        .upload-box p { margin: 0; font-size: 0.9rem; }
+        .upload-box span { color: var(--text-muted); font-size: 0.8rem; }
+
+        /* Language Selection */
+        .lang-select { width: 100%; padding: 10px; background: var(--bg-dark); border: 1px solid var(--border-color); border-radius: 0.5rem; color: white; }
+        .lang-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-top: 10px; }
+        .lang-item {
+            border: 1px solid var(--border-color); border-radius: 0.25rem;
+            text-align: center; padding: 8px 4px; cursor: pointer; transition: 0.2s;
+        }
+        .lang-item:hover { border-color: var(--primary); }
+        .lang-item img { width: 24px; height: 18px; display: block; margin: 0 auto 5px auto; }
+        .lang-item span { font-size: 0.7rem; display: block; }
+
+        /* Task Mode */
+        .mode-grid { display: flex; gap: 15px; }
+        .mode-btn {
+            flex: 1; border: 1px solid var(--border-color); border-radius: 0.5rem;
+            padding: 10px; text-align: center; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
+            font-size: 0.9rem;
+        }
+        .mode-btn i { color: var(--primary); }
+        .mode-btn:hover { border-color: var(--primary); background: rgba(96, 165, 250, 0.05);}
+
+        .start-btn {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white; border: none; padding: 1rem; border-radius: 0.5rem;
+            width: 100%; font-weight: bold; cursor: pointer; margin-top: 2rem; text-transform: uppercase; font-size: 1rem;
+        }
+
+        /* Features Grid (Bottom) */
+        .feat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; }
+        .feat-card { background-color: var(--bg-card); padding: 1.5rem; border-radius: 0.75rem; border: 1px solid var(--border-color); text-align: center;}
+        .feat-card i { font-size: 1.8rem; color: var(--primary); margin-bottom: 1rem; }
+        .feat-card h4 { margin: 0 0 5px 0; font-size: 0.9rem; }
+        .feat-card p { margin: 0; color: var(--text-muted); font-size: 0.75rem; }
+
+        /* Footer */
+        footer { margin-top: 4rem; text-align: center; font-size: 0.8rem; color: var(--text-muted); border-top: 1px solid var(--border-color); padding-top: 2rem; }
+        footer i { color: #ef4444; }
+
+        /* Responsive Adjustments */
+        @media(max-width: 992px) {
+            .sidebar { width: 70px; padding: 1rem; }
+            .brand-text, .brand-sub, .nav-link span, .pro-card { display: none; }
+            .brand { justify-content: center; margin-bottom: 1rem;}
+            .nav-link { justify-content: center; }
+            .nav-link i { margin: 0; font-size: 1.2rem;}
+        }
+        @media(max-width: 768px) {
+            .main-content { padding: 1.5rem; }
+            .hero-banner { flex-direction: column; text-align: center; gap: 1rem; }
+            .dub-workflow { grid-template-columns: 1fr; }
+            .lang-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <nav class="sidebar">
+        <a href="#" class="brand">
+            <!-- আপনার ছবি 'profile.png' নামে ফোল্ডারে রাখতে হবে, না থাকলে 'S' দেখাবে -->
+            <img src="profile.png" alt="S" class="logo-img" onerror="this.style.display='none'; document.getElementById('fallbackLogo').style.display='flex';">
+            <div id="fallbackLogo" class="logo-circle" style="display:none;">S</div>
+            <div>
+                <div class="brand-text">Sohel AI</div>
+                <div class="brand-sub">All-in-One AI Platform</div>
+            </div>
+        </a>
+
+        <ul class="nav-menu">
+            <li class="nav-item"><a href="#" class="nav-link active"><i class="fas fa-home"></i> <span>Home</span></a></li>
+            <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa
+
