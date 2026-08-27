@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sohel AI - Coin System Platform</title>
+    <title>Sohel AI - Working AI Platform</title>
     <style>
         :root {
             --bg-color: #0b0f19;
@@ -15,576 +15,259 @@
             --text-main: #ffffff;
             --text-muted: #94a3b8;
         }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            display: flex;
-            min-height: 100vh;
-        }
-
-        /* Sidebar Styles */
-        aside {
-            width: 280px;
-            background-color: var(--sidebar-color);
-            border-right: 1px solid var(--border-color);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            padding: 25px 20px;
-            position: fixed;
-            height: 100vh;
-            overflow-y: auto;
-        }
-
-        .logo-area {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 30px;
-        }
-
-        .logo-box {
-            width: 48px;
-            height: 48px;
-            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 22px;
-            font-weight: bold;
-            color: #fff;
-        }
-
-        .logo-text h2 {
-            font-size: 1.15rem;
-            color: #fff;
-        }
-
-        .logo-text p {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-        }
-
-        .nav-links {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            flex-grow: 1;
-        }
-
-        .nav-links li a {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            padding: 12px 15px;
-            color: var(--text-muted);
-            text-decoration: none;
-            border-radius: 10px;
-            font-size: 0.95rem;
-            transition: all 0.3s ease;
-        }
-
-        .nav-links li.active a, .nav-links li a:hover {
-            background: linear-gradient(90deg, #2563eb, #7c3aed);
-            color: #fff;
-        }
-
-        .pro-card {
-            background: rgba(139, 92, 246, 0.08);
-            border: 1px solid rgba(139, 92, 246, 0.25);
-            padding: 16px;
-            border-radius: 14px;
-            margin-top: 20px;
-        }
-
-        .pro-card h4 {
-            color: #c084fc;
-            font-size: 0.9rem;
-            margin-bottom: 6px;
-        }
-
-        .pro-card p {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            line-height: 1.4;
-        }
-
-        /* Main Content Styles */
-        main {
-            margin-left: 280px;
-            flex-grow: 1;
-            padding: 30px;
-            max-width: calc(100% - 280px);
-        }
-
-        .top-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-        }
-
-        .coin-display {
-            background: linear-gradient(135deg, rgba(234, 179, 8, 0.15), rgba(202, 138, 4, 0.2));
-            border: 1px solid rgba(234, 179, 8, 0.4);
-            color: #facc15;
-            padding: 8px 18px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .login-badge {
-            background-color: rgba(16, 185, 129, 0.12);
-            color: #34d399;
-            border: 1px solid rgba(16, 185, 129, 0.3);
-            padding: 6px 16px;
-            border-radius: 20px;
-            font-size: 0.82rem;
-            font-weight: 600;
-        }
-
-        /* Hero Banner */
-        .hero {
-            background: linear-gradient(135deg, #171c33, #0d1222);
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            padding: 35px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 35px;
-        }
-
-        .hero-content h1 {
-            font-size: 2.1rem;
-            margin-bottom: 10px;
-            color: #fff;
-        }
-
-        .hero-content h1 span {
-            color: #60a5fa;
-        }
-
-        .hero-content p {
-            color: var(--text-muted);
-            margin-bottom: 20px;
-            font-size: 0.95rem;
-        }
-
-        .hero-badges {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .hero-tag {
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 6px 14px;
-            border-radius: 8px;
-            font-size: 0.8rem;
-            color: #e2e8f0;
-        }
-
-        .hero-robot {
-            font-size: 70px;
-            background: rgba(59, 130, 246, 0.1);
-            padding: 20px;
-            border-radius: 20px;
-            border: 1px solid rgba(59, 130, 246, 0.2);
-        }
-
-        /* Section Headings */
-        .section-title {
-            font-size: 1.1rem;
-            margin-bottom: 16px;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        /* AI Tools Grid */
-        .tools-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 16px;
-            margin-bottom: 35px;
-        }
-
-        .tool-card {
-            background-color: var(--card-color);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 22px 16px;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-
-        .tool-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--accent-blue);
-        }
-
-        .tool-card .icon {
-            font-size: 2rem;
-            margin-bottom: 12px;
-        }
-
-        .tool-card h3 {
-            font-size: 0.95rem;
-            margin-bottom: 6px;
-            color: #fff;
-        }
-
-        .tool-card p {
-            font-size: 0.72rem;
-            color: var(--text-muted);
-            margin-bottom: 16px;
-            line-height: 1.3;
-        }
-
-        .btn-use {
-            background: linear-gradient(90deg, #2563eb, #3b82f6);
-            color: #fff;
-            border: none;
-            padding: 8px 12px;
-            border-radius: 8px;
-            font-size: 0.78rem;
-            cursor: pointer;
-            width: 100%;
-            font-weight: 600;
-        }
-
-        .btn-use:hover {
-            opacity: 0.9;
-        }
-
-        /* Workspace Section */
-        .workspace {
-            background-color: var(--card-color);
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            padding: 30px;
-            margin-bottom: 35px;
-        }
-
-        .workspace h2 {
-            font-size: 1.15rem;
-            margin-bottom: 6px;
-            color: #fff;
-        }
-
-        .workspace > p {
-            color: var(--text-muted);
-            font-size: 0.82rem;
-            margin-bottom: 22px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            font-size: 0.85rem;
-            margin-bottom: 8px;
-            color: #cbd5e1;
-        }
-
-        .dropzone {
-            border: 2px dashed #3b82f6;
-            background: rgba(59, 130, 246, 0.03);
-            border-radius: 14px;
-            padding: 35px;
-            text-align: center;
-        }
-
-        .dropzone p {
-            color: var(--text-muted);
-            font-size: 0.8rem;
-            margin-top: 8px;
-        }
-
-        .select-custom {
-            width: 100%;
-            background: #1a253a;
-            border: 1px solid var(--border-color);
-            color: #fff;
-            padding: 12px 15px;
-            border-radius: 10px;
-            font-size: 0.88rem;
-            outline: none;
-        }
-
-        .lang-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
-            gap: 10px;
-        }
-
-        .lang-opt {
-            background: #1a253a;
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            padding: 10px;
-            text-align: center;
-            cursor: pointer;
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            transition: 0.2s;
-        }
-
-        .lang-opt.active {
-            border-color: var(--accent-blue);
-            background: rgba(59, 130, 246, 0.1);
-            color: #fff;
-        }
-
-        .btn-start {
-            background: linear-gradient(90deg, #2563eb, #7c3aed);
-            color: #fff;
-            border: none;
-            width: 100%;
-            padding: 14px;
-            border-radius: 12px;
-            font-size: 0.95rem;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        /* Features Footer Grid */
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-
-        .feature-box {
-            background-color: var(--card-color);
-            border: 1px solid var(--border-color);
-            padding: 18px;
-            border-radius: 14px;
-            text-align: center;
-        }
-
-        .feature-box h4 {
-            font-size: 0.88rem;
-            margin: 8px 0 4px;
-            color: #fff;
-        }
-
-        .feature-box p {
-            font-size: 0.72rem;
-            color: var(--text-muted);
-        }
-
-        footer {
-            text-align: center;
-            color: var(--text-muted);
-            font-size: 0.78rem;
-            border-top: 1px solid var(--border-color);
-            padding-top: 20px;
-        }
-
-        /* Responsive */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: var(--bg-color); color: var(--text-main); display: flex; min-height: 100vh; }
+        aside { width: 280px; background-color: var(--sidebar-color); border-right: 1px solid var(--border-color); display: flex; flex-direction: column; justify-content: space-between; padding: 25px 20px; position: fixed; height: 100vh; overflow-y: auto; }
+        .logo-area { display: flex; align-items: center; gap: 12px; margin-bottom: 30px; }
+        .logo-box { width: 48px; height: 48px; background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple)); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: bold; color: #fff; }
+        .logo-text h2 { font-size: 1.15rem; color: #fff; }
+        .logo-text p { font-size: 0.75rem; color: var(--text-muted); }
+        .nav-links { list-style: none; display: flex; flex-direction: column; gap: 6px; flex-grow: 1; }
+        .nav-links li a { display: flex; align-items: center; gap: 14px; padding: 12px 15px; color: var(--text-muted); text-decoration: none; border-radius: 10px; font-size: 0.95rem; transition: all 0.3s ease; cursor: pointer; }
+        .nav-links li.active a, .nav-links li a:hover { background: linear-gradient(90deg, #2563eb, #7c3aed); color: #fff; }
+        .pro-card { background: rgba(139, 92, 246, 0.08); border: 1px solid rgba(139, 92, 246, 0.25); padding: 16px; border-radius: 14px; margin-top: 20px; }
+        .pro-card h4 { color: #c084fc; font-size: 0.9rem; margin-bottom: 6px; }
+        .pro-card p { font-size: 0.75rem; color: var(--text-muted); line-height: 1.4; }
+        main { margin-left: 280px; flex-grow: 1; padding: 30px; max-width: calc(100% - 280px); }
+        .top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
+        .coin-display { background: linear-gradient(135deg, rgba(234, 179, 8, 0.15), rgba(202, 138, 4, 0.2)); border: 1px solid rgba(234, 179, 8, 0.4); color: #facc15; padding: 8px 18px; border-radius: 20px; font-size: 0.9rem; font-weight: bold; display: flex; align-items: center; gap: 8px; }
+        .login-badge { background-color: rgba(16, 185, 129, 0.12); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); padding: 6px 16px; border-radius: 20px; font-size: 0.82rem; font-weight: 600; }
+        .section-content { display: none; }
+        .section-content.active { display: block; }
+        .hero { background: linear-gradient(135deg, #171c33, #0d1222); border: 1px solid var(--border-color); border-radius: 20px; padding: 35px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 35px; }
+        .hero-content h1 { font-size: 2.1rem; margin-bottom: 10px; color: #fff; }
+        .hero-content h1 span { color: #60a5fa; }
+        .hero-content p { color: var(--text-muted); margin-bottom: 20px; font-size: 0.95rem; }
+        .hero-badges { display: flex; gap: 10px; flex-wrap: wrap; }
+        .hero-tag { background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.1); padding: 6px 14px; border-radius: 8px; font-size: 0.8rem; color: #e2e8f0; }
+        .hero-robot { font-size: 70px; background: rgba(59, 130, 246, 0.1); padding: 20px; border-radius: 20px; border: 1px solid rgba(59, 130, 246, 0.2); }
+        .section-title { font-size: 1.1rem; margin-bottom: 16px; color: #fff; display: flex; align-items: center; gap: 8px; }
+        .tools-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 35px; }
+        .tool-card { background-color: var(--card-color); border: 1px solid var(--border-color); border-radius: 16px; padding: 22px 16px; text-align: center; transition: all 0.3s ease; }
+        .tool-card:hover { transform: translateY(-5px); border-color: var(--accent-blue); }
+        .tool-card .icon { font-size: 2rem; margin-bottom: 12px; }
+        .tool-card h3 { font-size: 0.95rem; margin-bottom: 6px; color: #fff; }
+        .tool-card p { font-size: 0.72rem; color: var(--text-muted); margin-bottom: 16px; line-height: 1.3; }
+        .btn-use { background: linear-gradient(90deg, #2563eb, #3b82f6); color: #fff; border: none; padding: 8px 12px; border-radius: 8px; font-size: 0.78rem; cursor: pointer; width: 100%; font-weight: 600; }
+        .workspace { background-color: var(--card-color); border: 1px solid var(--border-color); border-radius: 20px; padding: 30px; margin-bottom: 35px; }
+        .workspace h2 { font-size: 1.15rem; margin-bottom: 6px; color: #fff; }
+        .workspace > p { color: var(--text-muted); font-size: 0.82rem; margin-bottom: 22px; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; font-size: 0.85rem; margin-bottom: 8px; color: #cbd5e1; }
+        .dropzone { border: 2px dashed #3b82f6; background: rgba(59, 130, 246, 0.03); border-radius: 14px; padding: 35px; text-align: center; }
+        .dropzone p { color: var(--text-muted); font-size: 0.8rem; margin-top: 8px; }
+        .btn-start { background: linear-gradient(90deg, #2563eb, #7c3aed); color: #fff; border: none; width: 100%; padding: 14px; border-radius: 12px; font-size: 0.95rem; font-weight: bold; cursor: pointer; }
+        footer { text-align: center; color: var(--text-muted); font-size: 0.78rem; border-top: 1px solid var(--border-color); padding-top: 20px; margin-top: 30px; }
         @media (max-width: 900px) {
-            aside {
-                width: 100%;
-                height: auto;
-                position: relative;
-                flex-direction: row;
-                align-items: center;
-                padding: 12px 15px;
-                overflow-x: auto;
-            }
-            .logo-area, .pro-card {
-                display: none;
-            }
-            .nav-links {
-                flex-direction: row;
-                gap: 5px;
-            }
-            .nav-links li a {
-                padding: 8px 10px;
-                font-size: 0.8rem;
-            }
-            main {
-                margin-left: 0;
-                max-width: 100%;
-                padding: 15px;
-            }
-            .hero {
-                flex-direction: column;
-                text-align: center;
-            }
+            aside { width: 100%; height: auto; position: relative; flex-direction: row; align-items: center; padding: 12px 15px; overflow-x: auto; }
+            .logo-area, .pro-card { display: none; }
+            .nav-links { flex-direction: row; gap: 5px; }
+            .nav-links li a { padding: 8px 10px; font-size: 0.8rem; }
+            main { margin-left: 0; max-width: 100%; padding: 15px; }
+            .hero { flex-direction: column; text-align: center; }
         }
     </style>
 </head>
 <body>
-
-    <!-- Sidebar -->
     <aside>
         <div>
             <div class="logo-area">
                 <div class="logo-box">S</div>
-                <div class="logo-text">
-                    <h2>Sohel AI</h2>
-                    <p>All-in-One AI Platform</p>
-                </div>
+                <div class="logo-text"><h2>Sohel AI</h2><p>All-in-One AI Platform</p></div>
             </div>
-            
             <ul class="nav-links">
-                <li class="active"><a href="#">🏠 Home</a></li>
-                <li><a href="#">🎥 AI Video</a></li>
-                <li><a href="#">🖼️ AI Photo</a></li>
-                <li><a href="#">✂️ Background</a></li>
-                <li><a href="#">🎙️ Dubbing</a></li>
-                <li><a href="#">🌐 Translate</a></li>
-                <li><a href="#">ℹ️ About</a></li>
+                <li id="nav-home" class="active"><a onclick="switchTab('home')">🏠 Home</a></li>
+                <li id="nav-video"><a onclick="switchTab('video')">🎥 AI Video</a></li>
+                <li id="nav-photo"><a onclick="switchTab('photo')">🖼️ AI Photo</a></li>
+                <li id="nav-bg"><a onclick="switchTab('bg')">✂️ Background</a></li>
+                <li id="nav-dub"><a onclick="switchTab('dub')">🎙️ Dubbing</a></li>
+                <li id="nav-trans"><a onclick="switchTab('trans')">🌐 Translate</a></li>
+                <li id="nav-about"><a onclick="switchTab('about')">ℹ️ About</a></li>
             </ul>
         </div>
-
         <div class="pro-card">
             <h4>👑 Sohel AI Pro</h4>
-            <p>Coming Soon... প্রিমিয়াম ফিচার পেতে অপেক্ষা করুন।</p>
+            <p>Coming Soon...</p>
         </div>
     </aside>
 
-    <!-- Main Content -->
     <main>
         <div class="top-bar">
-            <!-- কয়েন ব্যালেন্স কাউন্টার -->
-            <div class="coin-display">
-                🪙 কয়েন: <span id="coinCount">1000</span> (প্রতি কাজে ১০ কয়েন কাটবে)
-            </div>
+            <div class="coin-display">🪙 কয়েন: <span id="coinCount">1000</span></div>
             <span class="login-badge">🔒 No Login Required</span>
         </div>
 
-        <!-- Hero Section -->
-        <section class="hero">
-            <div class="hero-content">
-                <h1>Welcome to <span>Sohel AI</span></h1>
-                <p>একটি All-in-One AI Platform যেখানে আপনি কয়েন ব্যবহার করে ভিডিও ডাবিং, অনুবাদ ও এডিটিং করতে পারবেন।</p>
-                <div class="hero-badges">
-                    <span class="hero-tag">🛡️ 100% Free</span>
-                    <span class="hero-tag">⚡ Coin System</span>
-                    <span class="hero-tag">🚀 AI Powered</span>
+        <!-- Home Section -->
+        <div id="section-home" class="section-content active">
+            <section class="hero">
+                <div class="hero-content">
+                    <h1>Welcome to <span>Sohel AI</span></h1>
+                    <p>একটি All-in-One AI Platform যেখানে আপনি কয়েন ব্যবহার করে কাজ করতে পারবেন।</p>
+                    <div class="hero-badges">
+                        <span class="hero-tag">🛡️ 100% Free</span>
+                        <span class="hero-tag">⚡ Coin System</span>
+                    </div>
                 </div>
-            </div>
-            <div class="hero-robot">🤖</div>
-        </section>
+                <div class="hero-robot">🤖</div>
+            </section>
 
-        <!-- AI Tools -->
-        <h2 class="section-title">✨ Our AI Tools</h2>
-        <div class="tools-grid">
-            <div class="tool-card">
-                <div class="icon">🎬</div>
-                <h3>AI Video</h3>
-                <p>ভিডিও তৈরি ও এডিটিং করুন</p>
-                <button class="btn-use" onclick="useTool(10)">ব্যবহার করুন (-10)</button>
-            </div>
-            <div class="tool-card">
-                <div class="icon">🖼️</div>
-                <h3>AI Photo</h3>
-                <p>ছবি এডিটিং ও উন্নত করুন</p>
-                <button class="btn-use" onclick="useTool(10)">ব্যবহার করুন (-10)</button>
-            </div>
-            <div class="tool-card">
-                <div class="icon">✂️</div>
-                <h3>Background Remove</h3>
-                <p>ব্যাকগ্রাউন্ড রিমুভ করুন</p>
-                <button class="btn-use" onclick="useTool(10)">ব্যবহার করুন (-10)</button>
-            </div>
-            <div class="tool-card">
-                <div class="icon">🎙️</div>
-                <h3>Video Dubbing</h3>
-                <p>ভিডিও ডাবিং করুন সহজে</p>
-                <button class="btn-use" onclick="useTool(10)">ব্যবহার করুন (-10)</button>
-            </div>
-            <div class="tool-card">
-                <div class="icon">🌐</div>
-                <h3>Translate AI</h3>
-                <p>ভাষা অনুবাদ করুন নিমেষে</p>
-                <button class="btn-use" onclick="useTool(10)">ব্যবহার করুন (-10)</button>
+            <h2 class="section-title">✨ Our AI Tools</h2>
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <div class="icon">🎬</div>
+                    <h3>AI Video</h3>
+                    <p>ভিডিও তৈরি ও এডিটিং</p>
+                    <button class="btn-use" onclick="useTool('AI Video', 'video')">ব্যবহার করুন (-10)</button>
+                </div>
+                <div class="tool-card">
+                    <div class="icon">🖼️</div>
+                    <h3>AI Photo</h3>
+                    <p>ছবি এডিটিং</p>
+                    <button class="btn-use" onclick="useTool('AI Photo', 'photo')">ব্যবহার করুন (-10)</button>
+                </div>
+                <div class="tool-card">
+                    <div class="icon">✂️</div>
+                    <h3>Background</h3>
+                    <p>রিমুভ ব্যাকগ্রাউন্ড</p>
+                    <button class="btn-use" onclick="useTool('Background Remove', 'bg')">ব্যবহার করুন (-10)</button>
+                </div>
+                <div class="tool-card">
+                    <div class="icon">🎙️</div>
+                    <h3>Dubbing</h3>
+                    <p>ভিডিও ডাবিং</p>
+                    <button class="btn-use" onclick="useTool('Video Dubbing', 'dub')">ব্যবহার করুন (-10)</button>
+                </div>
+                <div class="tool-card">
+                    <div class="icon">🌐</div>
+                    <h3>Translate</h3>
+                    <p>ভাষা অনুবাদ</p>
+                    <button class="btn-use" onclick="useTool('Translate AI', 'trans')">ব্যবহার করুন (-10)</button>
+                </div>
             </div>
         </div>
 
-        <!-- Workspace Section -->
-        <section class="workspace">
-            <h2>🎙️ Video Dubbing & Translate AI</h2>
-            <p>আপনার ভিডিও আপলোড করুন এবং যেকোনো ভাষায় ডাবিং বা অনুবাদ করুন</p>
-            
-            <div class="form-group">
-                <label>1. ভিডিও আপলোড করুন</label>
-                <div class="dropzone">
-                    <div style="font-size: 35px;">📁</div>
-                    <p>ভিডিও ফাইল নির্বাচন করুন (MP4, MKV)</p>
-                </div>
-            </div>
+        <!-- AI Video Workspace -->
+        <div id="section-video" class="section-content">
+            <section class="workspace">
+                <h2>🎬 AI Video Studio</h2>
+                <p>আপনার ভিডিও জেনারেট বা এডিট করার জন্য ফাইল আপলোড করুন</p>
+                <div class="dropzone"><div style="font-size: 35px;">📤</div><p>ভিডিও ফাইল এখানে ড্রপ করুন</p></div>
+                <button class="btn-start" onclick="alert('ভিডিও প্রসেসিং শুরু হয়েছে!')" style="margin-top:20px;">প্রক্রিয়া শুরু করুন</button>
+            </section>
+        </div>
 
-            <button class="btn-start" onclick="useTool(20)">🚀 প্রক্রিয়া শুরু করুন (খরচ: ২০ কয়েন)</button>
-        </section>
+        <!-- AI Photo Workspace -->
+        <div id="section-photo" class="section-content">
+            <section class="workspace">
+                <h2>🖼️ AI Photo Editor</h2>
+                <p>আপনার ছবি এডিট বা জেনারেট করুন</p>
+                <div class="dropzone"><div style="font-size: 35px;">🖼️</div><p>ছবি এখানে ড্রপ করুন</p></div>
+                <button class="btn-start" onclick="alert('ফটো প্রসেসিং শুরু হয়েছে!')" style="margin-top:20px;">এডিট শুরু করুন</button>
+            </section>
+        </div>
 
-        <!-- Features -->
-        <h2 class="section-title">🌟 আমাদের বৈশিষ্ট্য</h2>
-        <div class="features-grid">
-            <div class="feature-box">
-                <div style="font-size: 20px;">⚡</div>
-                <h4>AI Powered</h4>
-                <p>সর্বাধুনিক প্রযুক্তি</p>
-            </div>
-            <div class="feature-box">
-                <div style="font-size: 20px;">🛡️</div>
-                <h4>100% Secure</h4>
-                <p>সম্পূর্ণ নিরাপদ</p>
-            </div>
-            <div class="feature-box">
-                <div style="font-size: 20px;">⏱️</div>
-                <h4>Ultra Fast</h4>
-                <p>দ্রুত প্রসেসিং</p>
-            </div>
-            <div class="feature-box">
-                <div style="font-size: 20px;">🎁</div>
-                <h4>Coin System</h4>
-                <p>লিমিটেড ও নিয়ন্ত্রিত ব্যবহার</p>
-            </div>
+        <!-- Background Remove Workspace -->
+        <div id="section-bg" class="section-content">
+            <section class="workspace">
+                <h2>✂️ Background Remover</h2>
+                <p>ছবির ব্যাকগ্রাউন্ড রিমুভ করুন এক ক্লিকে</p>
+                <div class="dropzone"><div style="font-size: 35px;">✂️</div><p>ছবি আপলোড করুন</p></div>
+                <button class="btn-start" onclick="alert('ব্যাকগ্রাউন্ড রিমুভ হচ্ছে!')" style="margin-top:20px;">রিমুভ করুন</button>
+            </section>
+        </div>
+
+        <!-- Dubbing Workspace -->
+        <div id="section-dub" class="section-content">
+            <section class="workspace">
+                <h2>🎙️ Video Dubbing AI</h2>
+                <p>আপনার ভিডিওর ভয়েস ডাবিং করুন</p>
+                <div class="dropzone"><div style="font-size: 35px;">🎙️</div><p>অডিও/ভিডিও ফাইল দিন</p></div>
+                <button class="btn-start" onclick="alert('ডাবিং প্রসেস শুরু হয়েছে!')" style="margin-top:20px;">ডাবিং করুন</button>
+            </section>
+        </div>
+
+        <!-- Translate Workspace -->
+        <div id="section-trans" class="section-content">
+            <section class="workspace">
+                <h2>🌐 AI Translate Studio</h2>
+                <p>যেকোনো ভাষা অনুবাদ করুন</p>
+                <div class="dropzone"><div style="font-size: 35px;">🌐</div><p>টেক্সট বা ডকুমেন্ট দিন</p></div>
+                <button class="btn-start" onclick="alert('অনুবাদ কাজ শুরু হয়েছে!')" style="margin-top:20px;">অনুবাদ করুন</button>
+            </section>
+        </div>
+
+        <!-- About Section -->
+        <div id="section-about" class="section-content">
+            <section class="workspace">
+                <h2>ℹ️ About Sohel AI</h2>
+                <p>এটি একটি আধুনিক এআই প্ল্যাটফর্ম যা খুব দ্রুত বিভিন্ন এআই টুল ব্যবহারের সুবিধা দেয়।</p>
+            </section>
         </div>
 
         <footer>
-            <p>&copy; 2026 Sohel AI. All Rights Reserved. ❤️ Made with ❤️ for Everyone</p>
+            <p>&copy; 2026 Sohel AI. All Rights Reserved.</p>
         </footer>
     </main>
 
     <script>
-        // কয়েন সিস্টেমের জাভাস্ক্রিপ্ট কোড
-        let userCoins = 100; // আপনি এখান থেকে যেকোনো সংখ্যা সেট করে দিতে পারবেন যে ইউজার কত কয়েন পাবে
+        // কয়েন এবং পেজ সুইচিং সিস্টেম
+        let userCoins = localStorage.getItem('sohelAiCoins');
+        if (userCoins === null || isNaN(userCoins)) {
+            userCoins = 1000;
+            localStorage.setItem('sohelAiCoins', userCoins);
+        } else {
+            userCoins = parseInt(userCoins);
+        }
 
-        function useTool(cost) {
-            if (userCoins >= cost) {
-                userCoins -= cost;
-                document.getElementById('coinCount').innerText = userCoins;
-                alert('সফলভাবে কাজটি শুরু হয়েছে! আপনার অ্যাকাউন্ট থেকে ' + cost + ' কয়েন কেটে নেওয়া হয়েছে।');
-            } else {
-                alert('⚠️ আপনার পর্যাপ্ত কয়েন নেই! এই কাজটি করতে আরও কয়েনের প্রয়োজন।');
+        function updateDisplay() {
+            const span = document.getElementById('coinCount');
+            if (span) {
+                span.innerText = userCoins;
             }
+            localStorage.setItem('sohelAiCoins', userCoins);
+        }
+
+        window.onload = function() {
+            updateDisplay();
+        };
+
+        function switchTab(tabId) {
+            // সব সেকশন হাইড করা
+            const sections = document.querySelectorAll('.section-content');
+            sections.forEach(sec => sec.classList.remove('active'));
+
+            // সিলেক্ট করা সেকশন ওপেন করা
+            const target = document.getElementById('section-che' === 'section-' + tabId ? 'section-home' : 'section-' + tabId);
+            if(target) {
+                target.classList.add('active');
+            }
+
+            // মেনু একটিভ স্টাইল পরিবর্তন
+            const navs = document.querySelectorAll('.nav-links li');
+            navs.forEach(n => n.classList.remove('active'));
+            const activeNav = document.getElementById('nav-' + tabId);
+            if(activeNav) {
+                activeNav.classList.add('active');
+            }
+        }
+
+        function useTool(toolName, targetTab) {
+            let cost = 10;
+            let currentCoins = parseInt(localStorage.getItem('sohelAiCoins')) || 1000;
+
+            if (currentCoins < cost) {
+                alert("⚠️ আপনার পর্যাপ্ত কয়েন নেই! আরও কয়েন প্রয়োজন।");
+                return;
+            }
+
+            currentCoins -= cost;
+            userCoins = currentCoins;
+            localStorage.setItem('sohelAiCoins', userCoins);
+            updateDisplay();
+
+            // কয়েন কাটার পর সরাসরি সেই টুলের পেজে নিয়ে যাওয়া
+            switchTab(targetTab);
         }
     </script>
 </body>
 </html>
-
