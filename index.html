@@ -21,10 +21,9 @@
         
         aside { width: 280px; background-color: var(--sidebar-color); border-right: 1px solid var(--border-color); display: flex; flex-direction: column; justify-content: space-between; padding: 25px 20px; position: fixed; height: 100vh; overflow-y: auto; z-index: 100; }
         .logo-area { display: flex; align-items: center; gap: 12px; margin-bottom: 25px; }
-        .logo-box { width: 50px; height: 50px; border-radius: 50%; overflow: hidden; border: 2px solid var(--accent-purple); box-shadow: 0 4px 15px rgba(139,92,246,0.4); background: #1e293b; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-        .logo-box img { width: 100%; height: 100%; object-fit: cover; }
-        .logo-text h2 { font-size: 1.1rem; color: #fff; }
-        .logo-text p { font-size: 0.7rem; color: var(--text-muted); }
+        .logo-box { width: 45px; height: 45px; border-radius: 50%; background: linear-gradient(135deg, #ec4899, #8b5cf6, #3b82f6); display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(139,92,246,0.5); flex-shrink: 0; font-size: 22px; }
+        .logo-text h2 { font-size: 1.05rem; color: #fff; }
+        .logo-text p { font-size: 0.68rem; color: var(--text-muted); }
         
         .nav-links { list-style: none; display: flex; flex-direction: column; gap: 6px; flex-grow: 1; }
         .nav-links li a { display: flex; align-items: center; gap: 14px; padding: 12px 15px; color: var(--text-muted); text-decoration: none; border-radius: 10px; font-size: 0.92rem; transition: all 0.3s ease; cursor: pointer; }
@@ -97,9 +96,7 @@
     <aside>
         <div>
             <div class="logo-area">
-                <div class="logo-box">
-                    <img src="profile.png" alt="Logo">
-                </div>
+                <div class="logo-box">⚡</div>
                 <div class="logo-text"><h2>Sohel AI Studio</h2><p>Professional Suite</p></div>
             </div>
             <ul class="nav-links">
@@ -123,7 +120,7 @@
         <div class="top-bar">
             <div class="coin-display">🪙 কয়েন: <span id="coinCount">1000</span></div>
             <div class="user-profile-bar">
-                <button class="btn-login" onclick="openLoginModal()">👤 লগইন / সাইন আপ</button>
+                <button class="btn-login" id="loginBtnText" onclick="openLoginModal()">👤 লগইন / সাইন আপ</button>
             </div>
         </div>
 
@@ -296,9 +293,9 @@
         <div class="modal-box">
             <button class="close-modal" onclick="closeLoginModal()">&times;</button>
             <h3>🔑 Sohel AI Login</h3>
-            <input type="email" placeholder="আপনার ইমেল দিন" id="userEmail">
-            <input type="password" placeholder="পাসওয়ার্ড দিন" id="userPass">
-            <button onclick="handleLogin()">লগইন করুন</button>
+            <input type="text" placeholder="ইউজার নেম দিন (Username)" id="userNameInput">
+            <input type="password" placeholder="পাসওয়ার্ড দিন (Password)" id="userPassInput">
+            <button onclick="handleLogin()">লগইন / সাইন আপ</button>
         </div>
     </div>
 
@@ -309,6 +306,11 @@
             localStorage.setItem('sohelAiCoins', userCoins);
         } else {
             userCoins = parseInt(userCoins);
+        }
+
+        let savedUser = localStorage.getItem('sohelAiUser');
+        if(savedUser) {
+            document.getElementById('loginBtnText').innerText = "👤 " + savedUser;
         }
 
         function updateDisplay() {
@@ -378,15 +380,18 @@
         }
 
         function handleLogin() {
-            let emailInput = document.getElementById('userEmail').value;
-            if(emailInput) {
-                alert("✅ সফলভাবে লগইন হয়েছে: " + emailInput);
+            let username = document.getElementById('userNameInput').value.trim();
+            let password = document.getElementById('userPassInput').value.trim();
+            
+            if(username !== "" && password !== "") {
+                localStorage.setItem('sohelAiUser', username);
+                document.getElementById('loginBtnText').innerText = "👤 " + username;
+                alert("✅ স্বাগতম, " + username + "! সফলভাবে লগইন হয়েছে।");
                 closeLoginModal();
             } else {
-                alert("⚠️ দয়া করে সঠিক ইমেল দিন।");
+                alert("⚠️ দয়া করে ইউজার নেম এবং পাসওয়ার্ড উভয়ই দিন।");
             }
         }
     </script>
 </body>
 </html>
-
