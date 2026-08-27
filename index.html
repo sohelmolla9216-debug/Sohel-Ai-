@@ -3,223 +3,258 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sohel AI - All-in-One AI Platform</title>
-    <!-- Font Awesome CDN -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <title>Sohel AI - Responsive</title>
     <style>
+        /* --- CSS Variables & Reset --- */
         :root {
-            --bg-dark: #080b13;
-            --bg-card: #111623;
-            --border-color: #1f2937;
-            --text-main: #f3f4f6;
-            --text-muted: #9ca3af;
-            --primary: #60a5fa; /* Blue */
-            --accent: #8b5cf6; /* Purple */
-            --success: #10b981;
-            --warning: #f59e0b;
+            --bg-dark: #0d1117; /* মূল কালো ব্যাকগ্রাউন্ড */
+            --text-main: #c9d1d9; /* মূল টেক্সট কালার */
+            --sidebar-bg: #161b22; /* সাইডবার ব্যাকগ্রাউন্ড */
+            --accent-color: #58a6ff; /* অ্যাকেন্ট কালার (নীল) */
+            --highlight-color: #1f2937; /* হোভার কালার */
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
         body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             background-color: var(--bg-dark);
             color: var(--text-main);
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            margin: 0;
-            padding: 0;
+            line-height: 1.6;
             display: flex;
             min-height: 100vh;
+            /* বড় স্ক্রিনের জন্য পাশাপাশি লেআউট */
+            flex-direction: row;
         }
 
-        /* --- Sidebar --- */
+        /* --- Sidebar Styles --- */
         .sidebar {
-            width: 260px;
-            background-color: var(--bg-card);
-            border-right: 1px solid var(--border-color);
+            width: 80px; /* ছোট সাইডবার */
+            background-color: var(--sidebar-bg);
+            border-right: 1px solid #30363d;
             display: flex;
             flex-direction: column;
-            padding: 1.5rem;
-            position: sticky;
-            top: 0;
-            height: 100vh;
+            align-items: center;
+            padding: 20px 0;
+            flex-shrink: 0; /* স্ক্রল করার সময় সাইডবার ছোট হবে না */
         }
 
-        .brand {
+        .logo-container {
+            margin-bottom: 30px;
+            cursor: pointer;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--accent-color);
             display: flex;
             align-items: center;
-            gap: 12px;
-            margin-bottom: 3rem;
+            justify-content: center;
+            color: var(--bg-dark);
+            font-weight: bold;
+            font-size: 1.2em;
+            text-transform: uppercase;
+            border: 2px solid #fff;
         }
 
-        .logo-circle {
-            width: 40px; height: 40px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            display: flex; align-items: center; justify-content: center;
-            font-weight: bold; font-size: 1.2rem; color: white;
-        }
-        .logo-img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid var(--primary);}
-        .brand-text { font-size: 1.25rem; font-weight: 800; }
-        .brand-sub { font-size: 0.75rem; color: var(--text-muted); }
-
-        .nav-menu { list-style: none; padding: 0; margin: 0; flex: 1; }
-        .nav-item { margin-bottom: 1rem; }
-        .nav-link {
-            display: flex; align-items: center; gap: 12px;
-            color: var(--text-muted); text-decoration: none;
-            padding: 10px; border-radius: 0.5rem;
-            transition: 0.2s; font-size: 0.9rem;
-        }
-        .nav-link:hover { background-color: rgba(96, 165, 250, 0.1); color: var(--primary); }
-        .nav-link.active { background-color: var(--primary); color: var(--bg-dark); font-weight: 600; }
-        .nav-link i { width: 20px; text-align: center; }
-        .nav-link span { display: block; }
-        .nav-link small { font-size: 0.65rem; opacity: 0.8; }
-
-        .pro-card {
-            background: linear-gradient(135deg, #1f2937, #111623);
-            padding: 1.5rem; border-radius: 0.75rem; text-align: center;
-            border: 1px solid var(--accent);
-        }
-        .pro-card h4 { margin: 0 0 0.5rem 0; color: var(--accent); }
-        .pro-card p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem; }
-        .pro-btn {
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            color: white; border: none; padding: 0.5rem 1rem;
-            border-radius: 0.5rem; width: 100%; cursor: pointer; font-weight: 600;
+        .nav-links {
+            list-style: none;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        /* --- Main Content --- */
-        .main-content { flex: 1; padding: 2rem 3rem; overflow-y: auto; }
-
-        /* Top Header */
-        .content-header { display: flex; justify-content: flex-end; align-items: center; margin-bottom: 3rem; }
-        .login-badge {
-            background-color: rgba(16, 185, 129, 0.1);
-            color: var(--success); border: 1px solid var(--success);
-            padding: 6px 12px; border-radius: 2rem; font-size: 0.8rem;
-        }
-        .login-badge i { margin-right: 6px; }
-
-        /* Hero Banner */
-        .hero-banner {
-            background: linear-gradient(135deg, var(--bg-card), #1e293b);
-            border-radius: 1rem; padding: 2.5rem; display: flex; align-items: center; gap: 2rem;
-            margin-bottom: 3rem; border: 1px solid var(--border-color);
-        }
-        .hero-icon { font-size: 4rem; color: var(--primary); }
-        .hero-text h1 { margin: 0 0 10px 0; font-size: 2rem; }
-        .hero-text h1 span { color: var(--primary); }
-        .hero-text p { margin: 0; color: var(--text-muted); font-size: 0.9rem; max-width: 500px; line-height: 1.5;}
-        .hero-badges { display: flex; gap: 10px; margin-top: 1rem; }
-        .h-badge { font-size: 0.75rem; background: rgba(255,255,255,0.05); padding: 4px 8px; border-radius: 4px;}
-        .h-badge i { margin-right: 4px; }
-
-        /* Tools Section */
-        .section-title { font-size: 1.25rem; margin-bottom: 1.5rem; color: var(--text-main); }
-        .tools-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 3rem; }
-        .tool-card {
-            background-color: var(--bg-card); border: 1px solid var(--border-color);
-            border-radius: 0.75rem; padding: 1.5rem; transition: 0.3s; display: flex; flex-direction: column;
-        }
-        .tool-card:hover { border-color: var(--primary); transform: translateY(-3px); }
-        .tool-icon { font-size: 2rem; color: var(--primary); margin-bottom: 1rem; }
-        .tool-card h3 { margin: 0 0 8px 0; font-size: 1.1rem; }
-        .tool-card p { margin: 0 0 1.5rem 0; color: var(--text-muted); font-size: 0.85rem; flex: 1;}
-        .tool-btn {
-            background-color: rgba(96, 165, 250, 0.1); color: var(--primary);
-            border: none; padding: 8px; border-radius: 0.5rem; cursor: pointer; font-size: 0.85rem;
-            display: flex; align-items: center; justify-content: center; gap: 6px; transition: 0.2s;
-        }
-        .tool-btn:hover { background-color: var(--primary); color: var(--bg-dark); }
-
-        /* Video Dubbing & Translate Section */
-        .dub-section { background-color: var(--bg-card); border-radius: 1rem; padding: 2rem; border: 1px solid var(--border-color); margin-bottom: 3rem; }
-        .dub-header { display: flex; align-items: center; gap: 15px; margin-bottom: 1.5rem; }
-        .dub-header i { font-size: 1.5rem; color: var(--accent); }
-        .dub-header h2 { margin: 0; font-size: 1.4rem; }
-        .dub-header p { margin: 5px 0 0 0; color: var(--text-muted); font-size: 0.85rem; }
-
-        .dub-workflow { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
-        .wf-step { border: 1px dashed var(--border-color); border-radius: 0.5rem; padding: 1rem; }
-        .wf-step h4 { margin: 0 0 10px 0; font-size: 0.9rem; color: var(--text-muted); }
-        
-        /* Upload Area */
-        .upload-box {
-            border: 2px dashed var(--primary); border-radius: 0.5rem;
-            text-align: center; padding: 2rem; cursor: pointer; background-color: rgba(96, 165, 250, 0.05);
-        }
-        .upload-box i { font-size: 2rem; color: var(--primary); margin-bottom: 1rem; }
-        .upload-box p { margin: 0; font-size: 0.9rem; }
-        .upload-box span { color: var(--text-muted); font-size: 0.8rem; }
-
-        /* Language Selection */
-        .lang-select { width: 100%; padding: 10px; background: var(--bg-dark); border: 1px solid var(--border-color); border-radius: 0.5rem; color: white; }
-        .lang-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-top: 10px; }
-        .lang-item {
-            border: 1px solid var(--border-color); border-radius: 0.25rem;
-            text-align: center; padding: 8px 4px; cursor: pointer; transition: 0.2s;
-        }
-        .lang-item:hover { border-color: var(--primary); }
-        .lang-item img { width: 24px; height: 18px; display: block; margin: 0 auto 5px auto; }
-        .lang-item span { font-size: 0.7rem; display: block; }
-
-        /* Task Mode */
-        .mode-grid { display: flex; gap: 15px; }
-        .mode-btn {
-            flex: 1; border: 1px solid var(--border-color); border-radius: 0.5rem;
-            padding: 10px; text-align: center; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
-            font-size: 0.9rem;
-        }
-        .mode-btn i { color: var(--primary); }
-        .mode-btn:hover { border-color: var(--primary); background: rgba(96, 165, 250, 0.05);}
-
-        .start-btn {
-            background: linear-gradient(135deg, var(--primary), var(--accent));
-            color: white; border: none; padding: 1rem; border-radius: 0.5rem;
-            width: 100%; font-weight: bold; cursor: pointer; margin-top: 2rem; text-transform: uppercase; font-size: 1rem;
+        .nav-links li {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 10px;
         }
 
-        /* Features Grid (Bottom) */
-        .feat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; }
-        .feat-card { background-color: var(--bg-card); padding: 1.5rem; border-radius: 0.75rem; border: 1px solid var(--border-color); text-align: center;}
-        .feat-card i { font-size: 1.8rem; color: var(--primary); margin-bottom: 1rem; }
-        .feat-card h4 { margin: 0 0 5px 0; font-size: 0.9rem; }
-        .feat-card p { margin: 0; color: var(--text-muted); font-size: 0.75rem; }
-
-        /* Footer */
-        footer { margin-top: 4rem; text-align: center; font-size: 0.8rem; color: var(--text-muted); border-top: 1px solid var(--border-color); padding-top: 2rem; }
-        footer i { color: #ef4444; }
-
-        /* Responsive Adjustments */
-        @media(max-width: 992px) {
-            .sidebar { width: 70px; padding: 1rem; }
-            .brand-text, .brand-sub, .nav-link span, .pro-card { display: none; }
-            .brand { justify-content: center; margin-bottom: 1rem;}
-            .nav-link { justify-content: center; }
-            .nav-link i { margin: 0; font-size: 1.2rem;}
+        .nav-links a {
+            display: block;
+            padding: 15px 0;
+            color: #8b949e;
+            text-decoration: none;
+            transition: all 0.3s ease;
         }
-        @media(max-width: 768px) {
-            .main-content { padding: 1.5rem; }
-            .hero-banner { flex-direction: column; text-align: center; gap: 1rem; }
-            .dub-workflow { grid-template-columns: 1fr; }
-            .lang-grid { grid-template-columns: repeat(3, 1fr); }
+
+        .nav-links a:hover, .nav-links a.active {
+            background-color: var(--highlight-color);
+            color: var(--accent-color);
+            border-left: 3px solid var(--accent-color);
         }
+
+        .nav-links a svg {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+        }
+
+        /* --- Main Content Styles --- */
+        .main-content {
+            flex-grow: 1; /* বাকি জায়গা পূর্ণ করবে */
+            padding: 40px;
+            overflow-y: auto; /* কন্টেন্ট বড় হলে স্ক্রল আসবে */
+        }
+
+        .header-title {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: var(--accent-color);
+        }
+
+        .description {
+            max-width: 800px;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background-color: var(--sidebar-bg);
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #30363d;
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-color);
+        }
+
+        .card h3 {
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        /* --- Responsive Styles (Mobile) --- */
+        @media (max-width: 768px) {
+            body {
+                /* মোবাইল স্ক্রিনে সাইডবার ওপরে চলে যাবে এবং মেইন কন্টেন্ট নিচে আসবে */
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+                flex-direction: row; /* অনুভূমিক মেনু */
+                padding: 10px;
+                border-right: none;
+                border-bottom: 1px solid #30363d;
+                justify-content: space-around; /* আইকনগুলো ছড়িয়ে থাকবে */
+            }
+
+            .logo-container {
+                margin-bottom: 0;
+            }
+
+            .nav-links {
+                flex-direction: row;
+                width: auto;
+            }
+
+            .nav-links li {
+                width: auto;
+                margin-bottom: 0;
+                margin: 0 5px;
+            }
+
+            .nav-links a {
+                padding: 10px 15px;
+                border-radius: 5px;
+            }
+
+             .nav-links a:hover, .nav-links a.active {
+                border-left: none; /* মোবাইল ভিউতে বামের বর্ডার সরিয়ে দিলাম */
+                 background-color: var(--highlight-color);
+            }
+
+            .main-content {
+                padding: 20px;
+                margin-top: 10px; /* সাইডবারের নিচে একটু জায়গা */
+            }
+
+             .header-title {
+                font-size: 2em;
+            }
+        }
+
+         @media (max-width: 480px) {
+             .header-title {
+                font-size: 1.5em;
+            }
+             .card-grid {
+                grid-template-columns: 1fr; /* ছোট মোবাইলে কার্ডগুলো এক কলামে দেখাবে */
+            }
+         }
     </style>
 </head>
 <body>
 
-    <!-- Sidebar -->
+    <!-- সাইডবার বা নেভিগেশন প্যানেল -->
     <nav class="sidebar">
-        <a href="#" class="brand">
-            <!-- আপনার ছবি 'profile.png' নামে ফোল্ডারে রাখতে হবে, না থাকলে 'S' দেখাবে -->
-            <img src="profile.png" alt="S" class="logo-img" onerror="this.style.display='none'; document.getElementById('fallbackLogo').style.display='flex';">
-            <div id="fallbackLogo" class="logo-circle" style="display:none;">S</div>
-            <div>
-                <div class="brand-text">Sohel AI</div>
-                <div class="brand-sub">All-in-One AI Platform</div>
-            </div>
-        </a>
+        <div class="logo-container" title="Sohel AI">
+            <!-- আপনি এখানে আপনার লোগোর ছবিও ব্যবহার করতে পারেন -->
+            <div class="user-avatar">S</div>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#" class="active" title="হোম">
+                <!-- হোম আইকন (SVG) -->
+                <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8h5z"/></svg>
+            </a></li>
+            <li><a href="#" title="প্রজেক্ট">
+                <!-- প্রজেক্ট আইকন (SVG) -->
+                <svg viewBox="0 0 24 24"><path d="M20 6h-8l-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 12H4V8h16v10z"/></svg>
+            </a></li>
+            <li><a href="#" title="ডকুমেন্টেশন">
+                <!-- ডকুমেন্টেশন আইকন (SVG) -->
+                <svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm4 18H6V4h7v5h5v11z"/></svg>
+            </a></li>
+             <li><a href="#" title="সেটিংস">
+                <!-- সেটিংস আইকন (SVG) -->
+                <svg viewBox="0 0 24 24"><path d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.96 2.18 14.73 2 14.5 2h-4c-.23 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.26.42.49.42h4c.23 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.23.09.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/></svg>
+            </a></li>
+        </ul>
+    </nav>
 
-        <ul class="nav-menu">
-            <li class="nav-item"><a href="#" class="nav-link active"><i class="fas fa-home"></i> <span>Home</span></a></li>
-            <li class="nav-item"><a href="#" class="nav-link"><i class="fas fa
+    <!-- মূল কন্টেন্ট এরিয়া -->
+    <main class="main-content">
+        <h1 class="header-title">স্বাগতম!</h1>
+        <p class="description">এটি একটি রেসপন্সিভ ওয়েবসাইট ডিজাইন। স্ক্রিনের সাইজ অনুযায়ী সাইডবারটি নিচে বা পাশে সরে যাবে।</p>
+        
+        <div class="card-grid">
+            <!-- কিছু কার্ড বা বক্স -->
+            <article class="card">
+                <h3>প্রজেক্ট ১</h3>
+                <p>আমার প্রথম প্রজেক্টের বর্ণনা এখানে থাকবে।</p>
+            </article>
+            <article class="card">
+                <h3>প্রজেক্ট ২</h3>
+                <p>আমার দ্বিতীয় প্রজেক্টের বর্ণনা এখানে থাকবে।</p>
+            </article>
+             <article class="card">
+                <h3>প্রজেক্ট ৩</h3>
+                <p>আমার তৃতীয় প্রজেক্টের বর্ণনা এখানে থাকবে।</p>
+            </article>
+             <article class="card">
+                <h3>প্রজেক্ট ৪</h3>
+                <p>আমার চতুর্থ প্রজেক্টের বর্ণনা এখানে থাকবে।</p>
+            </article>
+        </div>
+    </main>
 
+</body>
+</html>
