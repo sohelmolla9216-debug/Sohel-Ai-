@@ -1,226 +1,290 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sohel AI - Modern AI Studio</title>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>Sohel AI Studio - Pro Dashboard</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        darkbg: '#0b0f19',
+                        cardbg: '#161e2e',
+                        bordercolor: '#2a3447'
+                    }
+                }
+            }
+        }
+    </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #0b0f19; color: #f3f4f6; }
-        .glass-card { background: rgba(17, 24, 39, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); }
-        .gradient-btn { background: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%); }
-    </style>
 </head>
-<body class="flex h-screen overflow-hidden">
+<body class="bg-darkbg text-gray-100 font-sans min-h-screen flex flex-col">
 
-    <!-- Sidebar Navigation -->
-    <aside class="w-64 glass-card border-r border-gray-800 flex flex-col justify-between hidden md:flex p-4">
-        <div>
-            <div class="flex items-center gap-3 px-2 mb-8">
-                <div class="w-10 h-10 rounded-xl gradient-btn flex items-center justify-center text-white text-xl font-bold shadow-lg shadow-indigo-500/30">✨</div>
-                <div>
-                    <h1 class="font-bold text-lg text-white leading-tight">Sohel AI</h1>
-                    <p class="text-xs text-indigo-400 font-medium">Modern AI Studio</p>
+    <!-- Top Navigation Bar -->
+    <header class="bg-cardbg border-b border-bordercolor sticky top-0 z-50 px-4 py-3 flex justify-between items-center shadow-lg">
+        <div class="flex items-center space-x-3">
+            <div class="bg-indigo-600 text-white p-2 rounded-xl shadow-md">
+                <i class="fa-solid fa-wand-magic-sparkles text-xl"></i>
+            </div>
+            <div>
+                <h1 class="font-bold text-lg tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">Sohel AI Studio</h1>
+                <p class="text-xs text-gray-400">Pro Functional Suite</p>
+            </div>
+        </div>
+        
+        <!-- Coins & Profile -->
+        <div class="flex items-center space-x-3">
+            <div class="bg-bordercolor px-3 py-1.5 rounded-full flex items-center space-x-2 border border-yellow-500/30 shadow-inner">
+                <i class="fa-solid fa-coins text-yellow-400"></i>
+                <span id="coin-count" class="font-bold text-yellow-300">1,250</span>
+            </div>
+            <button onclick="claimBonus()" class="bg-gradient-to-r from-yellow-500 to-amber-600 hover:from-yellow-600 hover:to-amber-700 text-gray-950 font-bold px-3 py-1.5 rounded-lg text-xs shadow transition transform active:scale-95">
+                <i class="fa-solid fa-gift mr-1"></i> Bonus
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Workspace Area -->
+    <main class="flex-1 max-w-5xl w-full mx-auto p-4 pb-20">
+
+        <!-- Tab 1: AI Chatbot -->
+        <section id="tab-chat" class="tab-content space-y-4">
+            <div class="bg-cardbg border border-bordercolor rounded-2xl p-4 shadow-xl flex flex-col h-[70vh]">
+                <div class="border-b border-bordercolor pb-3 flex justify-between items-center">
+                    <h2 class="font-bold text-md text-indigo-300"><i class="fa-solid fa-robot mr-2"></i>Real AI Chat Interface</h2>
+                    <input type="password" id="api-key" placeholder="Optional: Gemini/OpenAI API Key" class="bg-darkbg border border-bordercolor text-xs rounded px-2 py-1 text-gray-300 w-48 focus:outline-none focus:border-indigo-500">
+                </div>
+                
+                <!-- Chat Messages Box -->
+                <div id="chat-messages" class="flex-1 overflow-y-auto space-y-3 py-4 pr-2 text-sm">
+                    <div class="bg-darkbg p-3 rounded-xl border border-bordercolor max-w-[80%]">
+                        <p class="text-indigo-400 font-bold text-xs mb-1">Sohel AI Assistant</p>
+                        <p class="text-gray-300">Hello! I am ready. You can test my tools or chat with me right now.</p>
+                    </div>
+                </div>
+
+                <!-- Chat Input Form -->
+                <div class="pt-3 border-t border-bordercolor flex space-x-2">
+                    <input type="text" id="user-input" placeholder="Type your message here..." class="flex-1 bg-darkbg border border-bordercolor rounded-xl px-4 py-2 text-sm focus:outline-none focus:border-indigo-500 text-gray-100">
+                    <button onclick="sendMessage()" class="bg-indigo-600 hover:bg-indigo-700 px-4 py-2 rounded-xl text-white font-bold transition shadow"><i class="fa-solid fa-paper-plane"></i></button>
                 </div>
             </div>
-            <nav class="space-y-1">
-                <a href="#" onclick="switchTab('home')" id="nav-home" class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium bg-indigo-600 text-white shadow-lg shadow-indigo-600/20 transition-all"><i class="fa-solid fa-house w-5"></i> Home</a>
-                <a href="#" onclick="switchTab('video')" id="nav-video" class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-gray-400 hover:bg-gray-800/60 hover:text-white transition-all"><i class="fa-solid fa-video w-5"></i> Video Editor</a>
-                <a href="#" onclick="switchTab('photo')" id="nav-photo" class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-gray-400 hover:bg-gray-800/60 hover:text-white transition-all"><i class="fa-solid fa-image w-5"></i> Photo Editor</a>
-                <a href="#" onclick="switchTab('bg')" id="nav-bg" class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-gray-400 hover:bg-gray-800/60 hover:text-white transition-all"><i class="fa-solid fa-wand-magic-sparkles w-5"></i> Background Remover</a>
-                <a href="#" onclick="switchTab('translate')" id="nav-translate" class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-gray-400 hover:bg-gray-800/60 hover:text-white transition-all"><i class="fa-solid fa-globe w-5"></i> Translation & Dubbing</a>
-                <a href="#" onclick="switchTab('coins')" id="nav-coins" class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-gray-400 hover:bg-gray-800/60 hover:text-white transition-all"><i class="fa-solid fa-coins w-5"></i> Coins & Balance</a>
-                <a href="#" onclick="switchTab('login')" id="nav-login" class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-gray-400 hover:bg-gray-800/60 hover:text-white transition-all"><i class="fa-solid fa-user-shield w-5"></i> Login / Signup</a>
-            </nav>
-        </div>
-        <div class="p-4 rounded-2xl bg-gradient-to-br from-indigo-900/40 to-purple-900/40 border border-indigo-500/20 text-center">
-            <h4 class="text-xs font-semibold text-indigo-300 uppercase tracking-wider mb-1">Pro Plan</h4>
-            <p class="text-xs text-gray-300 mb-3">Unlock all premium features & unlimited access.</p>
-            <button class="w-full py-2 text-xs font-bold text-white rounded-lg gradient-btn shadow-md">Upgrade Now</button>
-        </div>
-    </aside>
+        </section>
 
-    <!-- Main Content Area -->
-    <main class="flex-1 flex flex-col h-screen overflow-y-auto">
-        <!-- Top Header -->
-        <header class="glass-card sticky top-0 z-50 px-6 py-4 flex items-center justify-between border-b border-gray-800">
-            <div class="flex items-center gap-4 w-96">
-                <div class="relative w-full">
-                    <i class="fa-solid fa-search absolute left-3.5 top-3 text-gray-400 text-sm"></i>
-                    <input type="text" placeholder="Search tools, features..." class="w-full bg-gray-900/80 border border-gray-700 rounded-xl pl-10 pr-4 py-2 text-sm text-gray-200 focus:outline-none focus:border-indigo-500">
+        <!-- Tab 2: Canvas Photo Editor -->
+        <section id="tab-photo" class="tab-content space-y-4 hidden">
+            <div class="bg-cardbg border border-bordercolor rounded-2xl p-4 shadow-xl">
+                <h2 class="font-bold text-md text-purple-300 mb-3"><i class="fa-solid fa-image mr-2"></i>Live Image Filter & Editor</h2>
+                
+                <input type="file" id="image-loader" accept="image/*" class="block w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-indigo-600 file:text-white hover:file:bg-indigo-700 cursor-pointer mb-4">
+
+                <div class="flex justify-center bg-darkbg border border-bordercolor rounded-xl p-2 min-h-[250px] items-center relative overflow-hidden">
+                    <canvas id="image-canvas" class="max-h-[300px] object-contain rounded"></canvas>
+                    <p id="placeholder-text" class="text-gray-500 text-sm absolute">Upload an image to start editing</p>
+                </div>
+
+                <!-- Controls -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mt-4">
+                    <button onclick="applyFilter('grayscale')" class="bg-bordercolor hover:bg-gray-700 py-2 rounded-xl text-xs font-semibold transition border border-bordercolor">Grayscale</button>
+                    <button onclick="applyFilter('invert')" class="bg-bordercolor hover:bg-gray-700 py-2 rounded-xl text-xs font-semibold transition border border-bordercolor">Invert Colors</button>
+                    <button onclick="applyFilter('brightness')" class="bg-bordercolor hover:bg-gray-700 py-2 rounded-xl text-xs font-semibold transition border border-bordercolor">Brighten</button>
+                    <button onclick="resetImage()" class="bg-rose-900/40 hover:bg-rose-900/60 text-rose-300 py-2 rounded-xl text-xs font-semibold transition border border-rose-800/50">Reset</button>
+                </div>
+                
+                <a id="download-link" class="mt-4 block text-center bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-2.5 rounded-xl text-sm transition shadow hidden"><i class="fa-solid fa-download mr-2"></i>Download Edited Image</a>
+            </div>
+        </section>
+
+        <!-- Tab 3: Video Downloader / Extractor -->
+        <section id="tab-video" class="tab-content space-y-4 hidden">
+            <div class="bg-cardbg border border-bordercolor rounded-2xl p-4 shadow-xl space-y-4">
+                <h2 class="font-bold text-md text-emerald-300"><i class="fa-solid fa-video mr-2"></i>Video Link Parser & Info</h2>
+                <div class="flex space-x-2">
+                    <input type="text" id="video-url-input" placeholder="Paste YouTube or video link here..." class="flex-1 bg-darkbg border border-bordercolor rounded-xl px-4 py-2 text-sm focus:outline-none focus:border-emerald-500 text-gray-100">
+                    <button onclick="parseVideo()" class="bg-emerald-600 hover:bg-emerald-700 px-4 py-2 rounded-xl text-white font-bold text-sm transition shadow">Analyze</button>
+                </div>
+                <div id="video-result" class="bg-darkbg border border-bordercolor rounded-xl p-4 hidden text-sm space-y-2">
+                    <p class="text-emerald-400 font-bold"><i class="fa-solid fa-circle-check mr-1"></i> Video Link Verified!</p>
+                    <p id="video-link-display" class="text-gray-300 break-all text-xs bg-cardbg p-2 rounded border border-bordercolor"></p>
+                    <p class="text-xs text-gray-400">You can now extract streams or view details.</p>
                 </div>
             </div>
-            <div class="flex items-center gap-4">
-                <button onclick="claimBonus()" class="px-3 py-1.5 bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-semibold rounded-lg flex items-center gap-1.5"><i class="fa-solid fa-gift"></i> +50 Coins</button>
-                <div class="flex items-center gap-2 pl-2 border-l border-gray-800">
-                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100" class="w-9 h-9 rounded-full object-cover ring-2 ring-indigo-500/50" alt="User">
-                    <div class="hidden sm:block">
-                        <h4 class="text-xs font-bold text-white">Sohel Ahmed</h4>
-                        <p class="text-[10px] text-indigo-400 font-medium">Pro User</p>
-                    </div>
+        </section>
+
+        <!-- Tab 4: Account & Settings -->
+        <section id="tab-settings" class="tab-content space-y-4 hidden">
+            <div class="bg-cardbg border border-bordercolor rounded-2xl p-4 shadow-xl space-y-4">
+                <h2 class="font-bold text-md text-amber-300"><i class="fa-solid fa-user-gear mr-2"></i>User Profile & Storage</h2>
+                <div class="bg-darkbg p-4 rounded-xl border border-bordercolor space-y-2 text-sm">
+                    <p class="text-gray-300"><strong>Username:</strong> <span class="text-indigo-400">Sohel Molla</span></p>
+                    <p class="text-gray-300"><strong>Account Status:</strong> <span class="text-emerald-400">Pro Member</span></p>
+                    <p class="text-gray-300"><strong>Saved Coins:</strong> <span id="settings-coin-count" class="text-yellow-400 font-bold">1,250</span></p>
                 </div>
+                <button onclick="resetData()" class="w-full bg-rose-600/20 hover:bg-rose-600/30 text-rose-400 border border-rose-600/50 py-2.5 rounded-xl font-semibold text-xs transition">Clear Local Cache & Reset Coins</button>
             </div>
-        </header>
+        </section>
 
-        <!-- Dynamic Views / Tabs -->
-        <div class="p-6 max-w-7xl mx-auto w-full space-y-6">
-
-            <!-- HOME TAB -->
-            <section id="tab-home" class="space-y-6">
-                <div class="glass-card p-6 rounded-3xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-gradient-to-r from-indigo-950/50 via-purple-950/30 to-gray-900">
-                    <div>
-                        <h2 class="text-2xl font-bold text-white mb-1">Welcome back, Sohel! 👋</h2>
-                        <p class="text-sm text-gray-400">Create, edit and explore the power of AI instantly.</p>
-                    </div>
-                    <div class="flex items-center gap-3 bg-gray-900/80 border border-gray-800 px-4 py-2 rounded-2xl">
-                        <div class="text-amber-400 text-lg"><i class="fa-solid fa-coins"></i></div>
-                        <div>
-                            <p class="text-[10px] text-gray-400 uppercase tracking-wider">Coins Balance</p>
-                            <p id="coin-count" class="text-sm font-bold text-white">1,250</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- AI Tools Grid -->
-                <div>
-                    <h3 class="text-lg font-bold text-white mb-4">AI Tools</h3>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                        <div onclick="switchTab('video')" class="glass-card p-5 rounded-2xl cursor-pointer hover:border-indigo-500/50 transition-all group">
-                            <div class="w-12 h-12 rounded-xl bg-indigo-600/20 text-indigo-400 flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform"><i class="fa-solid fa-video"></i></div>
-                            <h4 class="font-bold text-white mb-1">AI Video Editor</h4>
-                            <p class="text-xs text-gray-400 mb-4">Edit videos like a pro with advanced AI magic.</p>
-                            <span class="text-xs font-semibold text-indigo-400 flex items-center gap-1">Get Started <i class="fa-solid fa-arrow-right text-[10px]"></i></span>
-                        </div>
-                        <div onclick="switchTab('photo')" class="glass-card p-5 rounded-2xl cursor-pointer hover:border-purple-500/50 transition-all group">
-                            <div class="w-12 h-12 rounded-xl bg-purple-600/20 text-purple-400 flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform"><i class="fa-solid fa-image"></i></div>
-                            <h4 class="font-bold text-white mb-1">AI Photo Editor</h4>
-                            <p class="text-xs text-gray-400 mb-4">Enhance photos and create stunning visuals instantly.</p>
-                            <span class="text-xs font-semibold text-purple-400 flex items-center gap-1">Get Started <i class="fa-solid fa-arrow-right text-[10px]"></i></span>
-                        </div>
-                        <div onclick="switchTab('bg')" class="glass-card p-5 rounded-2xl cursor-pointer hover:border-emerald-500/50 transition-all group">
-                            <div class="w-12 h-12 rounded-xl bg-emerald-600/20 text-emerald-400 flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
-                            <h4 class="font-bold text-white mb-1">Background Remover</h4>
-                            <p class="text-xs text-gray-400 mb-4">Remove background instantly with single click.</p>
-                            <span class="text-xs font-semibold text-emerald-400 flex items-center gap-1">Get Started <i class="fa-solid fa-arrow-right text-[10px]"></i></span>
-                        </div>
-                        <div onclick="switchTab('translate')" class="glass-card p-5 rounded-2xl cursor-pointer hover:border-pink-500/50 transition-all group">
-                            <div class="w-12 h-12 rounded-xl bg-pink-600/20 text-pink-400 flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform"><i class="fa-solid fa-globe"></i></div>
-                            <h4 class="font-bold text-white mb-1">Translation & Dubbing</h4>
-                            <p class="text-xs text-gray-400 mb-4">Translate, dub and speak in any global language.</p>
-                            <span class="text-xs font-semibold text-pink-400 flex items-center gap-1">Get Started <i class="fa-solid fa-arrow-right text-[10px]"></i></span>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- VIDEO EDITOR TAB -->
-            <section id="tab-video" class="hidden space-y-4">
-                <div class="flex items-center justify-between"><h2 class="text-xl font-bold text-white">🎬 AI Video Editor Studio</h2><button onclick="switchTab('home')" class="text-xs text-gray-400 hover:text-white"><i class="fa-solid fa-arrow-left"></i> Back to Home</button></div>
-                <div class="glass-card p-6 rounded-2xl grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="md:col-span-2 bg-gray-950 rounded-xl h-72 flex items-center justify-center border border-gray-800 relative overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=800" class="absolute inset-0 w-full h-full object-cover opacity-60">
-                        <button class="relative z-10 px-5 py-3 rounded-xl gradient-btn font-bold text-white shadow-lg"><i class="fa-solid fa-play mr-2"></i> Preview AI Video</button>
-                    </div>
-                    <div class="space-y-4">
-                        <h4 class="font-bold text-sm text-gray-300">Editing Tools</h4>
-                        <button onclick="alert('Video Trimmed Successfully!')" class="w-full py-2.5 bg-gray-800 hover:bg-gray-700 text-xs font-semibold rounded-xl text-left px-4 flex items-center justify-between"><span><i class="fa-solid fa-scissors mr-2 text-indigo-400"></i> Cut / Trim</span> <i class="fa-solid fa-chevron-right text-[10px] text-gray-500"></i></button>
-                        <button onclick="alert('AI Effects Applied!')" class="w-full py-2.5 bg-gray-800 hover:bg-gray-700 text-xs font-semibold rounded-xl text-left px-4 flex items-center justify-between"><span><i class="fa-solid fa-wand-magic mr-2 text-purple-400"></i> Apply Effects</span> <i class="fa-solid fa-chevron-right text-[10px] text-gray-500"></i></button>
-                        <button onclick="alert('Subtitles Generated!')" class="w-full py-2.5 bg-gray-800 hover:bg-gray-700 text-xs font-semibold rounded-xl text-left px-4 flex items-center justify-between"><span><i class="fa-solid fa-closed-captioning mr-2 text-pink-400"></i> Auto Subtitles</span> <i class="fa-solid fa-chevron-right text-[10px] text-gray-500"></i></button>
-                        <button onclick="alert('Video Exported Successfully!')" class="w-full py-3 rounded-xl gradient-btn font-bold text-xs text-white shadow-md mt-4">Export Video (4K)</button>
-                    </div>
-                </div>
-            </section>
-
-            <!-- PHOTO EDITOR TAB -->
-            <section id="tab-photo" class="hidden space-y-4">
-                <div class="flex items-center justify-between"><h2 class="text-xl font-bold text-white">🖼️ AI Photo Editor</h2><button onclick="switchTab('home')" class="text-xs text-gray-400 hover:text-white"><i class="fa-solid fa-arrow-left"></i> Back</button></div>
-                <div class="glass-card p-6 rounded-2xl grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="md:col-span-2 bg-gray-950 rounded-xl h-72 flex items-center justify-center border border-gray-800 relative overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=800" class="absolute inset-0 w-full h-full object-cover">
-                    </div>
-                    <div class="space-y-4">
-                        <h4 class="font-bold text-sm text-gray-300">Adjustments</h4>
-                        <div><label class="text-[10px] text-gray-400">Brightness</label><input type="range" class="w-full accent-indigo-500"></div>
-                        <div><label class="text-[10px] text-gray-400">Contrast</label><input type="range" class="w-full accent-indigo-500"></div>
-                        <div><label class="text-[10px] text-gray-400">Saturation</label><input type="range" class="w-full accent-indigo-500"></div>
-                        <button onclick="alert('Photo Enhanced with AI!')" class="w-full py-3 rounded-xl gradient-btn font-bold text-xs text-white">AI Enhance & Save</button>
-                    </div>
-                </div>
-            </section>
-
-            <!-- BACKGROUND REMOVER TAB -->
-            <section id="tab-bg" class="hidden space-y-4">
-                <div class="flex items-center justify-between"><h2 class="text-xl font-bold text-white">✂️ Background Remover</h2><button onclick="switchTab('home')" class="text-xs text-gray-400 hover:text-white"><i class="fa-solid fa-arrow-left"></i> Back</button></div>
-                <div class="glass-card p-8 rounded-2xl text-center max-w-xl mx-auto space-y-4">
-                    <div class="w-32 h-32 mx-auto rounded-full overflow-hidden border-2 border-indigo-500/50 shadow-lg"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=300" class="w-full h-full object-cover"></div>
-                    <p class="text-xs text-gray-400">Remove background instantly with one click using AI engine.</p>
-                    <button onclick="alert('Background Removed Successfully!')" class="w-full py-3 rounded-xl gradient-btn font-bold text-sm text-white">Remove Background</button>
-                </div>
-            </section>
-
-            <!-- TRANSLATION & DUBBING TAB -->
-            <section id="tab-translate" class="hidden space-y-4">
-                <div class="flex items-center justify-between"><h2 class="text-xl font-bold text-white">🌍 Translation & Dubbing</h2><button onclick="switchTab('home')" class="text-xs text-gray-400 hover:text-white"><i class="fa-solid fa-arrow-left"></i> Back</button></div>
-                <div class="glass-card p-6 rounded-2xl max-w-xl mx-auto space-y-4">
-                    <div class="grid grid-cols-2 gap-4">
-                        <div><label class="text-xs text-gray-400 mb-1 block">From Language</label><select class="w-full bg-gray-900 border border-gray-700 rounded-xl p-2.5 text-sm text-white"><option>English</option><option>Bengali</option></select></div>
-                        <div><label class="text-xs text-gray-400 mb-1 block">To Language</label><select class="w-full bg-gray-900 border border-gray-700 rounded-xl p-2.5 text-sm text-white"><option>Bengali</option><option>Chinese</option><option>Japanese</option></select></div>
-                    </div>
-                    <button onclick="alert('Translation & Voice Dubbing Started!')" class="w-full py-3 rounded-xl gradient-btn font-bold text-sm text-white">Translate & Dub Now</button>
-                </div>
-            </section>
-
-            <!-- COINS TAB -->
-            <section id="tab-coins" class="hidden space-y-4">
-                <div class="flex items-center justify-between"><h2 class="text-xl font-bold text-white">🪙 Coins & Balance</h2><button onclick="switchTab('home')" class="text-xs text-gray-400 hover:text-white"><i class="fa-solid fa-arrow-left"></i> Back</button></div>
-                <div class="glass-card p-6 rounded-2xl max-w-md mx-auto text-center space-y-4">
-                    <div class="w-16 h-16 bg-amber-500/20 text-amber-400 rounded-2xl flex items-center justify-center text-3xl mx-auto"><i class="fa-solid fa-coins"></i></div>
-                    <h3 class="text-2xl font-bold text-white">1,250 Coins Available</h3>
-                    <p class="text-xs text-gray-400">Use coins to run heavy AI models, video rendering and translation tasks.</p>
-                    <button onclick="alert('Redirecting to Top-up Gateway...')" class="w-full py-3 rounded-xl bg-amber-500 hover:bg-amber-600 font-bold text-sm text-gray-950">Top Up Coins</button>
-                </div>
-            </section>
-
-            <!-- LOGIN TAB -->
-            <section id="tab-login" class="hidden space-y-4">
-                <div class="flex items-center justify-between"><h2 class="text-xl font-bold text-white">🔐 Account Access</h2><button onclick="switchTab('home')" class="text-xs text-gray-400 hover:text-white"><i class="fa-solid fa-arrow-left"></i> Back</button></div>
-                <div class="glass-card p-8 rounded-2xl max-w-md mx-auto space-y-4">
-                    <div><label class="text-xs text-gray-400 mb-1 block">Email Address</label><input type="email" placeholder="sohel@example.com" class="w-full bg-gray-900 border border-gray-700 rounded-xl p-3 text-sm text-white"></div>
-                    <div><label class="text-xs text-gray-400 mb-1 block">Password</label><input type="password" placeholder="••••••••" class="w-full bg-gray-900 border border-gray-700 rounded-xl p-3 text-sm text-white"></div>
-                    <button onclick="alert('Login Successful!')" class="w-full py-3 rounded-xl gradient-btn font-bold text-sm text-white">Sign In</button>
-                </div>
-            </section>
-
-        </div>
     </main>
 
+    <!-- Bottom Navigation Bar -->
+    <nav class="bg-cardbg border-t border-bordercolor fixed bottom-0 left-0 right-0 py-2 px-6 flex justify-around items-center z-50 shadow-2xl">
+        <button onclick="switchTab('chat', this)" id="nav-chat" class="nav-btn flex flex-col items-center text-indigo-400 transition">
+            <i class="fa-solid fa-comments text-lg"></i>
+            <span class="text-[10px] mt-1 font-medium">Chat</span>
+        </button>
+        <button onclick="switchTab('photo', this)" id="nav-photo" class="nav-btn flex flex-col items-center text-gray-400 hover:text-gray-200 transition">
+            <i class="fa-solid fa-wand-magic text-lg"></i>
+            <span class="text-[10px] mt-1 font-medium">Photo</span>
+        </button>
+        <button onclick="switchTab('video', this)" id="nav-video" class="nav-btn flex flex-col items-center text-gray-400 hover:text-gray-200 transition">
+            <i class="fa-solid fa-film text-lg"></i>
+            <span class="text-[10px] mt-1 font-medium">Video</span>
+        </button>
+        <button onclick="switchTab('settings', this)" id="nav-settings" class="nav-btn flex flex-col items-center text-gray-400 hover:text-gray-200 transition">
+            <i class="fa-solid fa-user text-lg"></i>
+            <span class="text-[10px] mt-1 font-medium">Profile</span>
+        </button>
+    </nav>
+
+    <!-- JavaScript Functions -->
     <script>
-        function switchTab(tabId) {
-            const tabs = ['home', 'video', 'photo', 'bg', 'translate', 'coins', 'login'];
-            tabs.forEach(t => {
-                document.getElementById('tab-' + t).classList.add('hidden');
-                const nav = document.getElementById('nav-' + t);
-                if(nav) {
-                    nav.classList.remove('bg-indigo-600', 'text-white', 'shadow-lg', 'shadow-indigo-600/20');
-                    nav.classList.add('text-gray-400', 'hover:bg-gray-800/60', 'hover:text-white');
-                }
-            });
-            document.getElementById('tab-' + tabId).classList.remove('hidden');
-            const activeNav = document.getElementById('nav-' + tabId);
-            if(activeNav) {
-                activeNav.classList.remove('text-gray-400', 'hover:bg-gray-800/60', 'hover:text-white');
-                activeNav.classList.add('bg-indigo-600', 'text-white', 'shadow-lg', 'shadow-indigo-600/20');
-            }
+        // Coin System & LocalStorage Init
+        let coins = parseInt(localStorage.getItem('sohel_ai_coins')) || 1250;
+        updateCoinsUI();
+
+        function updateCoinsUI() {
+            document.getElementById('coin-count').innerText = coins.toLocaleString();
+            document.getElementById('settings-coin-count').innerText = coins.toLocaleString();
+            localStorage.setItem('sohel_ai_coins', coins);
         }
 
         function claimBonus() {
+            coins += 50;
+            updateCoinsUI();
             alert('🎉 Success! +50 Daily Bonus Coins added to your account.');
-            let countEl = document.getElementById('coin-count');
-            countEl.innerText = '1,300';
+        }
+
+        // Tab Switcher
+        function switchTab(tabId, btnElement) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById('tab-' + tabId).classList.remove('hidden');
+
+            document.querySelectorAll('.nav-btn').forEach(el => {
+                el.classList.remove('text-indigo-400');
+                el.classList.add('text-gray-400');
+            });
+            btnElement.classList.remove('text-gray-400');
+            btnElement.classList.add('text-indigo-400');
+        }
+
+        // 1. Chatbot Function
+        function sendMessage() {
+            const input = document.getElementById('user-input');
+            const chatBox = document.getElementById('chat-messages');
+            const text = input.value.trim();
+            if(!text) return;
+
+            // User Message
+            chatBox.innerHTML += `<div class="bg-indigo-600/30 border border-indigo-500/40 p-3 rounded-xl ml-auto max-w-[80%] text-right"><p class="text-indigo-300 font-bold text-xs mb-1">You</p><p class="text-gray-200">${text}</p></div>`;
+            input.value = '';
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            // Simulated Functional AI Response
+            setTimeout(() => {
+                let reply = "I received your message: \"" + text + "\". How can I help you further with code or tools?";
+                if(text.toLowerCase().includes('hello') || text.toLowerCase().includes('hi')) {
+                    reply = "Hello! Welcome to Sohel AI Studio. Try out our live photo filters or bonus collector!";
+                }
+                chatBox.innerHTML += `<div class="bg-darkbg p-3 rounded-xl border border-bordercolor max-w-[80%නි]"><p class="text-indigo-400 font-bold text-xs mb-1">Sohel AI Assistant</p><p class="text-gray-300">${reply}</p></div>`;
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }, 600);
+        }
+
+        // 2. Photo Canvas Filter Function
+        let canvas = document.getElementById('image-canvas');
+        let ctx = canvas.getContext('2d');
+        let img = new Image();
+        let originalImageData = null;
+
+        document.getElementById('image-loader').addEventListener('change', function(e) {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                img.onload = function() {
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    ctx.drawImage(img, 0, 0);
+                    originalImageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                    document.getElementById('placeholder-text').style.display = 'none';
+                    document.getElementById('download-link').classList.remove('hidden');
+                }
+                img.src = event.target.result;
+            }
+            reader.readAsDataURL(e.target.files[0]);
+        });
+
+        function applyFilter(type) {
+            if(!originalImageData) {
+                alert('Please upload an image first!');
+                return;
+            }
+            ctx.putImageData(originalImageData, 0, 0);
+            let imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            let data = imgData.data;
+
+            for (let i = 0; i < data.length; i += 4) {
+                let r = data[i], g = data[i+1], b = data[i+2];
+                if (type === 'grayscale') {
+                    let avg = (r + g + b) / 3;
+                    data[i] = avg; data[i+1] = avg; data[i+2] = avg;
+                } else if (type === 'invert') {
+                    data[i] = 255 - r; data[i+1] = 255 - g; data[i+2] = 255 - b;
+                } else if (type === 'brightness') {
+                    data[i] = Math.min(255, r + 40);
+                    data[i+1] = Math.min(255, g + 40);
+                    data[i+2] = Math.min(255, b + 40);
+                }
+            }
+            ctx.putImageData(imgData, 0, 0);
+
+            // Update download link
+            let downloadLink = document.getElementById('download-link');
+            downloadLink.href = canvas.toDataURL('image/png');
+            downloadLink.download = 'sohel-edited-image.png';
+        }
+
+        function resetImage() {
+            if(originalImageData) {
+                ctx.putImageData(originalImageData, 0, 0);
+            }
+        }
+
+        // 3. Video Parser
+        function parseVideo() {
+            const urlInput = document.getElementById('video-url-input').value.trim();
+            const resBox = document.getElementById('video-result');
+            if(!urlInput) {
+                alert('Please enter a valid link!');
+                return;
+            }
+            document.getElementById('video-link-display').innerText = urlInput;
+            resBox.classList.remove('hidden');
+        }
+
+        // 4. Reset Data
+        function resetData() {
+            if(confirm('Are you sure you want to reset all saved local data?')) {
+                localStorage.clear();
+                coins = 1250;
+                updateCoinsUI();
+                alert('Data reset successfully.');
+            }
         }
     </script>
 </body>
 </html>
+
